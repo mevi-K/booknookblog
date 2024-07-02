@@ -1,0 +1,63 @@
+/* styles.css */
+
+body {
+    background-color: #FCFEF1; /* Blanc cassé */
+}
+
+.navbar {
+    background-color: #EDC5A2; /* Beige-orangé */
+}
+
+.navbar-brand {
+    color: #000; /* Black */
+    font-weight: bold;
+}
+
+.navbar-brand img {
+    height: 40px; /* Adjust based on your logo size */
+}
+
+.navbar-nav .nav-link {
+    color: #000; /* Black */
+    font-weight: bold;
+}
+
+.navbar-nav .nav-link.active {
+    color: #C4AAB7; /* Mauve */
+}
+
+.navbar-toggler {
+    border-color: #C4AAB7; /* Mauve */
+}
+
+.navbar-toggler-icon {
+    background-color: #C4AAB7; /* Mauve */
+}
+
+.card {
+    background-color: #EDC5A2; /* Beige-orangé */
+    border: none;
+}
+
+.card-img-top {
+    border-bottom: 4px solid #C4AAB7; /* Mauve */
+}
+
+.card-body {
+    background-color: #ECB5A1; /* Rose */
+}
+
+.card-title, .card-text small {
+    color: #000; /* Black */
+    font-weight: bold;
+}
+
+.btn-primary {
+    background-color: #C4AAB7; /* Mauve */
+    border-color: #C4AAB7; /* Mauve */
+}
+
+.btn-primary:hover {
+    background-color: #B89F9F; /* Slightly darker mauve */
+    border-color: #B89F9F; /* Slightly darker mauve */
+}
