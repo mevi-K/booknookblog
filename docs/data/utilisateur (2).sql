@@ -1,0 +1,10 @@
+insert into utilisateur (Id_User, user_name, password, email_id, Id_role) values (1, 'Lydon', 'mC8.#7=6', 'lbazeley0@diigo.com', 1);
+insert into utilisateur (Id_User, user_name, password, email_id, Id_role) values (2, 'Stillmann', 'pY4$X~_o', 'scastelletti1@wp.com', 2);
+insert into utilisateur (Id_User, user_name, password, email_id, Id_role) values (3, 'Maryann', 'hK4|#T0H''d''124$_', 'mswoffer2@nytimes.com', 3);
+insert into utilisateur (Id_User, user_name, password, email_id, Id_role) values (4, 'Celeste', 'iA0+XygaSA"e', 'cwoodwing3@sciencedaily.com', 4);
+insert into utilisateur (Id_User, user_name, password, email_id, Id_role) values (5, 'Reg', 'vE2!%5li9''IR(H&', 'rmacey4@cnbc.com', 1);
+insert into utilisateur (Id_User, user_name, password, email_id, Id_role) values (6, 'Niven', 'qI1`xPxoH8FU/', 'ndufaire5@indiegogo.com', 2);
+insert into utilisateur (Id_User, user_name, password, email_id, Id_role) values (7, 'Eamon', 'eQ3%RU3?/>#fAFl>', 'egookey6@fc2.com', 3);
+insert into utilisateur (Id_User, user_name, password, email_id, Id_role) values (8, 'Thekla', 'rP0)EZTvzJ0<', 'terridge7@kickstarter.com', 4);
+insert into utilisateur (Id_User, user_name, password, email_id, Id_role) values (9, 'Pia', 'uO6_A4)87Vu9}', 'pabram8@opera.com', 1);
+insert into utilisateur (Id_User, user_name, password, email_id, Id_role) values (10, 'Jesse', 'nP6}W>p5HfGX"\', 'jgully9@webs.com', 2);

@@ -1,0 +1,66 @@
+CREATE TABLE Author(
+   Id_Author INT AUTO_INCREMENT,
+   name VARCHAR(50),
+   PRIMARY KEY(Id_Author)
+);
+
+CREATE TABLE Genre(
+   Id_Genre INT AUTO_INCREMENT,
+   nom_genre VARCHAR(50),
+   PRIMARY KEY(Id_Genre)
+);
+
+CREATE TABLE Role(
+   Id_role INT AUTO_INCREMENT,
+   PRIMARY KEY(Id_role)
+);
+
+CREATE TABLE Book(
+   Id_Book INT AUTO_INCREMENT,
+   Title VARCHAR(50),
+   Description VARCHAR(70),
+   books_sold INT,
+   date_pub DATE,
+   Id_Genre INT NOT NULL,
+   PRIMARY KEY(Id_Book),
+   FOREIGN KEY(Id_Genre) REFERENCES Genre(Id_Genre)
+);
+
+CREATE TABLE Utilisateur(
+   Id_User INT AUTO_INCREMENT,
+   user_name VARCHAR(50),
+   password VARCHAR(50),
+   email_id VARCHAR(50),
+   Id_role INT NOT NULL,
+   PRIMARY KEY(Id_User),
+   FOREIGN KEY(Id_role) REFERENCES Role(Id_role)
+);
+
+CREATE TABLE book_utilisateur(
+   Id_Book INT,
+   Id_User INT,
+   note VARCHAR(50),
+   PRIMARY KEY(Id_Book, Id_User),
+   FOREIGN KEY(Id_Book) REFERENCES Book(Id_Book),
+   FOREIGN KEY(Id_User) REFERENCES Utilisateur(Id_User)
+);
+
+CREATE TABLE Review(
+   Id_Review INT AUTO_INCREMENT,
+   comment VARCHAR(50),
+   Id_User INT,
+   Id_User_1 INT NOT NULL,
+   Id_Book INT NOT NULL,
+   PRIMARY KEY(Id_Review),
+   FOREIGN KEY(Id_User) REFERENCES Utilisateur(Id_User),
+   FOREIGN KEY(Id_User_1) REFERENCES Utilisateur(Id_User),
+   FOREIGN KEY(Id_Book) REFERENCES Book(Id_Book)
+);
+
+CREATE TABLE book_author(
+   Id_Book INT,
+   Id_Author INT,
+   PRIMARY KEY(Id_Book, Id_Author),
+   FOREIGN KEY(Id_Book) REFERENCES Book(Id_Book),
+   FOREIGN KEY(Id_Author) REFERENCES Author(Id_Author)
+);
