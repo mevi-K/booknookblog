@@ -48,33 +48,52 @@
     }
 ?>
 <body>
-    <div class="container-lg bg-light">
-        <?php 
-            if (file_exists(__DIR__ . '../app/navbar.php')) {
-                include_once __DIR__ . '../app/navbar.php';
-            } else {
-                echo "<p>Navbar file not found.</p>";
-            }
-        ?>
-        <main class="mt-5 pt-3 row">
-            <?php foreach ($books as $book): ?>
-                <div class="col-12 col-md-6 col-lg-3 d-flex align-items-stretch justify-content-center">
-                    <div class="card mb-3" style="width: 18rem;">
-                        <img src="https://picsum.photos/200/300?random=<?= rand(1, 1000) ?>" class="card-img-top" 
-                            alt="<?= htmlspecialchars($book['Title'], ENT_QUOTES, 'UTF-8') ?>">
-                        <div class="card-body text-center">
-                            <h5 class="card-title"><?= htmlspecialchars($book['Title'], ENT_QUOTES, 'UTF-8') ?></h5>
-                            <a href="#" class="btn btn-primary">Lire</a>
-                        </div>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        </main>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<!--Navbarre-->
+<?php require __DIR__ . "/components/header.php"; ?>
+
+<!--Contenu de la page-->
+<main class="row customBgBody">
+  <?php foreach($livres as $livre){ 
+     $random_pics = rand(1, 100);
+  ?>
+        <div class ="container  mt-4 col-12 col-md-6 col-lg-3 d-flex align-items justify-content-center">
+      <div class="card radiusCard" style="width: 18rem;">
+        <img src="https://picsum.photos/150/180?random=<?= $random_pics?>&grayscale" class="card-img-top" alt="...">
+        <div class="card-body text-center customCardStyle">
+          <h5 class="card-title"><?= $livre['Title']?></h5>
+          <p class="card-text" style="text-align: justify;"><?= $livre['Description']?></p>
+          <a href="../Controllers/description.controller.php" class="btn btn-outline-light btnCustom">En savoir plus</a>
+        </div>
+    </div>
+  </div>
+  <?php } ?>
+
+  <!-- Pagination -->
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center mt-5 customPagin">
+      <?php if($page > 1): ?>
+        <li class="page-item"><a class="page-link" href="?page=<?= $page - 1 ?>">Précédent</a></li>
+      <?php endif; ?>
+      <?php for($i = 1; $i <= $total_pages; $i++): ?>
+        <li class="page-item <?= ($i == $page) ? 'active' : '' ?>"><a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a></li>
+      <?php endfor; ?>
+      <?php if($page < $total_pages): ?>
+        <li class="page-item"><a class="page-link" href="?page=<?= $page + 1 ?>">Suivant</a></li>
+      <?php endif; ?>
+    </ul>
+  </nav>
+</main>
+
+  <!--Footer-->
+  <?php require __DIR__ . "/components/footer.php"; ?>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     
 </body>
+
+
 
 </html>
