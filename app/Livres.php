@@ -50,7 +50,7 @@
 <body>
 
 <!--Navbarre-->
-<?php require __DIR__ . "/components/header.php"; ?>
+<?php require __DIR__ . "/navbar.php"; ?>
 
 <!--Contenu de la page-->
 <main class="row customBgBody">
@@ -86,7 +86,7 @@
 </main>
 
   <!--Footer-->
-  <?php require __DIR__ . "/components/footer.php"; ?>
+  <?php require __DIR__ . "/footer.php"; ?>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
