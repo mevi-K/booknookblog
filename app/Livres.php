@@ -16,7 +16,7 @@
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 
-    include_once "C:\wamp64\www\BookNook-1\app\configs\db.config.php";
+    include "C:\wamp64\www\BookNook-1\app\configs\db.config.php";
 
     $dsn = "mysql:host=".DBHOST.";port=".DBPORT.";dbname=".DBNAME;
     $user = DBUSER;
