@@ -5,8 +5,4 @@
     const DBUSER = 'root';
     const DBPASS = '';
 
-
-
-
-
 ?>
