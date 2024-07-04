@@ -61,3 +61,8 @@ body {
     background-color: #B89F9F; /* Slightly darker mauve */
     border-color: #B89F9F; /* Slightly darker mauve */
 }
+.book-image {
+    width: 100%; /* Adjust width as needed */
+    max-width: 400px; /* Maximum width of the image */
+    height: auto; /* Maintain aspect ratio */
+}
