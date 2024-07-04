@@ -1,70 +1,132 @@
-<?php 
-define("DBHOST", "localhost");
-define("DBUSER", "root");
-define("DBPASS", "");
-define("DBNAME", "booknook");
-
-$dsn = "mysql:dbname=" . DBNAME . ";host=" . DBHOST;
-
-try {
-    $db = new PDO($dsn, DBUSER, DBPASS, array(
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
-    ));
-} catch (PDOException $e) {
-    echo 'Connection failed: ' . $e->getMessage();
-    exit;
-}
-
-$sql = "
-    SELECT Book.Title, Book.Description, Author.name AS AuthorName
-    FROM Book
-    JOIN book_author ON Book.Id_Book = book_author.Id_Book
-    JOIN Author ON book_author.Id_Author = Author.Id_Author
-";
-$stmt = $db->query($sql);
-$books = $stmt->fetchAll(PDO::FETCH_ASSOC);
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BookNook</title>
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQvRVip8Qwk2Hj27yDdHXf9Edfh7hu/nqbUdhZ0hdITiIuT8/VP1LpmBx" crossorigin="anonymous">
-    <link rel="stylesheet" href="CSS\styles.css">
-    
-    
+    <title>Signup Form</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #FCFEF1;
+        }
+        .signup-form {
+            background-color: #EDC5A2; 
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 400px;
+            margin: auto;
+        }
+        .signup-form h2 {
+            color: black;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-control {
+            border-radius: 20px;
+        }
+        .btn-signup {
+            background-color: #ECB5A1;
+            border-color: #ECB5A1;
+            color: black;
+            border-radius: 20px;
+        }
+        .btn-signup:hover {
+            background-color: #C4AAB7;
+            border-color: #C4AAB7;
+            color: white;
+        }
+    </style>
 </head>
 <body>
-    <div class="container-lg bg-light">
-       
-        <div class="heading text-center">
-            <h2>Book Descriptions</h2>
-        </div>
-        <div class="row">
-            <?php foreach ($books as $book): ?>
-                <div class="col-md-4">
-                    <div class="card" style="width: 18rem;">
-                        <?php
-                        // Generate a random image URL from Lorempicsum
-                        $imageUrl = "https://picsum.photos/seed/" . urlencode($book['Title']) . "/300/180";
-                        ?>
-                        <img src="<?php echo $imageUrl; ?>" class="card-img-top" alt="<?php echo htmlspecialchars($book['Title']); ?>">
-                        <div class="card-body">
-                            <h5 class="card-title"><?php echo htmlspecialchars($book['Title']); ?></h5>
-                            <h6 class="card-subtitle mb-2 text-body-secondary"><?php echo htmlspecialchars($book['AuthorName']); ?></h6>
-                            <p class="card-text"><?php echo htmlspecialchars($book['Description']); ?></p>
-                            <a href="#" class="card-link">Card link</a>
-                            <a href="#" class="card-link">Another link</a>
-                        </div>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    </div>
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Display the POST data for debugging
+    var_dump($_POST);
+}
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+if (!empty($_POST)) {
+    if (isset($_POST["name"], $_POST["email"], $_POST["password"]) && !empty($_POST["name"]) && !empty($_POST["email"]) && !empty($_POST["password"])) {
+        // Protection of data
+        $name = strip_tags($_POST["name"]);
+        if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+            die("email incorrect");
+        }
+
+        // Create hashed password 
+        $password = password_hash($_POST["password"], PASSWORD_ARGON2ID);
+
+        ini_set('display_errors', 1);
+        ini_set('display_startup_errors', 1);
+        error_reporting(E_ALL);
+
+        include "C:/wamp64/www/BookNook-1/app/configs/db.config.php";
+
+        $dsn = "mysql:host=".DBHOST.";port=".DBPORT.";dbname=".DBNAME;
+        $user = DBUSER;
+        $pass = DBPASS;
+
+        try {
+            $db = new PDO(
+                $dsn,
+                $user,
+                $pass,
+                array(
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                    PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
+                )
+            );
+
+            $sql = "INSERT INTO `utilisateur` (`user_name`, `email_id`, `password`, `Id_role`) VALUES (:name, :email, :password, 2)";
+
+            $query = $db->prepare($sql);
+            $query->bindValue(":name", $name, PDO::PARAM_STR);
+            $query->bindValue(":email", $_POST["email"], PDO::PARAM_STR);
+            $query->bindValue(":password", $password, PDO::PARAM_STR);
+            
+            if ($query->execute()) {
+                echo "User registered successfully!";
+            } else {
+                echo "Error: Unable to register user.";
+            }
+
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+
+    } else {
+        die("form is not complete");
+    }
+}
+?>
+<div class="container mt-5">
+    <div class="signup-form">
+        <h2>Sign Up</h2>
+        <form method="post">
+            <div class="form-group">
+                <label for="name">Enter Name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Enter Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Enter Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" class="form-control" id="confirm-password" name="confirm-password" placeholder="Confirm password" required>
+            </div>
+            <button type="submit" class="btn btn-signup btn-block">Sign Up</button>
+        </form>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

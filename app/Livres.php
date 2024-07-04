@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accueil</title>
+    <title>Livres</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -34,9 +34,9 @@
         );
 
         $sql = "
-            SELECT Book.Title
+            SELECT Id_Book, Title
             FROM Book
-            ORDER BY Book.date_pub DESC
+            ORDER BY date_pub DESC
             LIMIT 12
         ";
 
@@ -50,8 +50,9 @@
 <body>
     <div class="container-lg bg-light">
         <?php 
-            if (file_exists(__DIR__ . '../app/navbar.php')) {
-                include_once __DIR__ . '../app/navbar.php';
+            $navbarPath = __DIR__ . '/../app/navbar.php';
+            if (file_exists($navbarPath)) {
+                include_once $navbarPath;
             } else {
                 echo "<p>Navbar file not found.</p>";
             }
@@ -63,7 +64,11 @@
                         <img src="https://picsum.photos/200/300?random=<?= rand(1, 1000) ?>" class="card-img-top" 
                             alt="<?= htmlspecialchars($book['Title'], ENT_QUOTES, 'UTF-8') ?>">
                         <div class="card-body text-center">
-                            <h5 class="card-title"><?= htmlspecialchars($book['Title'], ENT_QUOTES, 'UTF-8') ?></h5>
+                            <h5 class="card-title">
+                                <a href="description.php?Id_Book=<?= htmlspecialchars($book['Id_Book'], ENT_QUOTES, 'UTF-8') ?>">
+                                    <?= htmlspecialchars($book['Title'], ENT_QUOTES, 'UTF-8') ?>
+                                </a>
+                            </h5>
                             <a href="#" class="btn btn-primary">Lire</a>
                         </div>
                     </div>
