@@ -41,43 +41,28 @@
 <body>
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Display the POST data for debugging
-    var_dump($_POST);
-}
+    // Include the database connection
+    include "../app/connect.php";
 
-if (!empty($_POST)) {
-    if (isset($_POST["name"], $_POST["email"], $_POST["password"]) && !empty($_POST["name"]) && !empty($_POST["email"]) && !empty($_POST["password"])) {
+    if (isset($_POST["name"], $_POST["email"], $_POST["password"], $_POST["confirm-password"]) &&
+        !empty($_POST["name"]) && !empty($_POST["email"]) && !empty($_POST["password"]) && !empty($_POST["confirm-password"])) {
+        
+        // Check if passwords match
+        if ($_POST["password"] !== $_POST["confirm-password"]) {
+            die("Passwords do not match.");
+        }
+
         // Protection of data
         $name = strip_tags($_POST["name"]);
         if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
-            die("email incorrect");
+            die("Email is incorrect.");
         }
 
-        // Create hashed password 
+        // Create hashed password
         $password = password_hash($_POST["password"], PASSWORD_ARGON2ID);
 
-        ini_set('display_errors', 1);
-        ini_set('display_startup_errors', 1);
-        error_reporting(E_ALL);
-
-        include "C:/wamp64/www/BookNook-1/app/configs/db.config.php";
-
-        $dsn = "mysql:host=".DBHOST.";port=".DBPORT.";dbname=".DBNAME;
-        $user = DBUSER;
-        $pass = DBPASS;
-
         try {
-            $db = new PDO(
-                $dsn,
-                $user,
-                $pass,
-                array(
-                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                    PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
-                )
-            );
-
-            $sql = "INSERT INTO `utilisateur` (`user_name`, `email_id`, `password`, `Id_role`) VALUES (:name, :email, :password, 2)";
+            $sql = "INSERT INTO utilisateur (user_name, email_id, password, Id_role) VALUES (:name, :email, :password, 2)";
 
             $query = $db->prepare($sql);
             $query->bindValue(":name", $name, PDO::PARAM_STR);
@@ -95,7 +80,7 @@ if (!empty($_POST)) {
         }
 
     } else {
-        die("form is not complete");
+        die("Form is not complete.");
     }
 }
 ?>
