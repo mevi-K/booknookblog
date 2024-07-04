@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,16 +10,9 @@
     
     <link rel="stylesheet" href="../CSS/styles.css">
 </head>
+<body>
 <?php 
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-
-    include_once "C:\wamp64\www\BookNook-1\app\configs\db.config.php";
-
-    $dsn = "mysql:host=".DBHOST.";port=".DBPORT.";dbname=".DBNAME;
-    $user = DBUSER;
-    $pass = DBPASS;
+    include_once "../app/connect.php"; // Include the connect.php file
 
     // Initialize variables with default values
     $title = 'Titre non disponible';
@@ -29,16 +21,6 @@
     $datePub = 'Date de publication non disponible';
 
     try {
-        $db = new PDO(
-            $dsn,
-            $user,
-            $pass,
-            array(
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
-            )
-        );
-
         // Ensure Id_Book is set and valid
         if (!isset($_GET["Id_Book"]) || empty($_GET["Id_Book"])) {
             header("Location: livres.php");
@@ -76,10 +58,9 @@
         echo "Error: " . $e->getMessage();
     }
 ?>
-<body>
     <div class="container-lg bg-light">
         <?php 
-            $navbarPath = __DIR__ . '/../app/navbar.php';
+            $navbarPath = __DIR__ . '../app/components/navbar.php';
             if (file_exists($navbarPath)) {
                 include_once $navbarPath;
             } else {
@@ -113,5 +94,4 @@
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     
 </body>
-
 </html>
