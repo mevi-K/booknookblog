@@ -9,16 +9,16 @@
           <span class="fs-4 customNavLink">Trier par : </span>
         </li>
         <li class="nav-item">
-          <a class="nav-link fs-4 customNavLink" href="livres.controller.php?sort=titre">Titre</a>
+          <a class="nav-link fs-5 customNavLink" href="livres.controller.php?sort=titre">Titre</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link fs-4 customNavLink" href="livres.controller.php?sort=auteur">Auteur</a>
+          <a class="nav-link fs-5 customNavLink" href="livres.controller.php?sort=auteur">Auteur</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link fs-4 customNavLink" href="livres.controller.php?sort=genre">Genre</a>
+          <a class="nav-link fs-5 customNavLink" href="livres.controller.php?sort=genre">Genre</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link fs-4 customNavLink" href="livres.controller.php?sort=date">Date</a>
+          <a class="nav-link fs-5 customNavLink" href="livres.controller.php?sort=date">Date</a>
         </li>
         
       </ul>

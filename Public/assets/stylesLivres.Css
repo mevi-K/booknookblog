@@ -1,0 +1,88 @@
+/*
+#C4AAB7 : mauve (196,170,183) 
+#FCFEF1 : blanc cassé (252, 254, 241) 
+#EDC5A2 : beige-orangé (237,197,162) 
+#EBB4A1 : rose (236, 181, 161)
+*/
+
+/*Body*/
+.customBgBody{
+    background-color: #f3ccbf;
+    min-height: 100vh;
+}
+
+.body{
+    margin : 0;
+    padding: 0;
+}
+
+
+/*Navbarre*/
+.navbar-brand img {
+    height: 100px; 
+}
+
+.customNavBg{
+    background-color: #C4AAB7;
+}
+
+.customNavLink{
+    color: #FCFEF1;
+}
+
+/*Header tags*/
+.customHeaderbg{
+    background-color: #EBB4A1;
+}
+
+
+/*Cards page livres*/
+.radiusCard{
+    border : solid 8px white;
+}
+
+.customCardStyle{
+    background-color:#C4AAB7;
+    color : #ffffff;
+}
+
+.btnCustom{
+    background-color: #EBB4A1;
+}
+
+
+/*Pagination*/
+.customPagin a{
+    color : #C4AAB7;
+}
+
+.active .page-link{
+    background-color: #EDC5A2;
+    border: none ;
+}
+
+.customPagin a:hover{
+    color : #C4AAB7;
+}
+
+
+/*Footer*/
+.footerTitleCustom{
+    letter-spacing: 2px;
+    color : white;
+}
+
+.customNavBg a{
+    color : white;
+}
+
+.customPhoto{
+    width: 10vw;
+    height : 15vh;
+    border : solid 4px white;
+}
+
+.customNavBg h5{
+    font-weight:bold;
+}
+

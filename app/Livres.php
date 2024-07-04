@@ -5,10 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Livres</title>
-    <link rel="stylesheet" href="/CSS/styles.css">
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     
+    <link rel="stylesheet" href="/assets/stylesLivres.css">
     
 </head>
 <?php 
@@ -16,7 +17,7 @@
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 
-    include "C:\wamp64\www\BookNook-1\app\configs\db.config.php";
+    require_once __DIR__ . "/configs/db.config.php";
 
     $dsn = "mysql:host=".DBHOST.";port=".DBPORT.";dbname=".DBNAME;
     $user = DBUSER;
@@ -78,23 +79,17 @@ switch ($sort){
 //* Récupération des livres depuis la base de données
 try {
     //Récupérer le nombre total de livres
-       $total_results = $ma_BDD->query('SELECT COUNT(*) FROM `book`')->fetchColumn();
+       $total_results = $db->query('SELECT COUNT(*) FROM `book`')->fetchColumn();
        $total_pages = ceil($total_results / $result_per_page);
 
     // Requête SQL pour récupérer tous les livres avec LIMIT et OFFSET  
     $sqlLivres = "SELECT * FROM `book` as B join genre as G on B.Id_Genre = G.Id_Genre join book_author as BA on B.Id_Book = BA.Id_Book join author as A on BA.Id_Author = A.Id_Author ORDER BY $orderby LIMIT " . $result_per_page . " OFFSET " . $offset; 
 
     // Exécution de la requête SQL
-    $requeteLivres = $ma_BDD->query($sqlLivres);
+    $requeteLivres = $db->query($sqlLivres);
 
     // Récupération des résultats
     $livres = $requeteLivres->fetchAll();
-
-//* Inclusion de la vue correspondante (livres.view.php par exemple)
-    require_once __DIR__ . "/../views/livres.view.php";
-
-// Inclusion de la vue correspondante (livres.view.php par exemple)
-require_once __DIR__ . "/../views/livres.view.php";
 
 } catch (PDOException $e) {
     die("Erreur lors de la récupération des livres : " . $e->getMessage());
@@ -120,7 +115,6 @@ require_once __DIR__ . "/../views/livres.view.php";
         <img src="https://picsum.photos/150/180?random=<?= $random_pics?>&grayscale" class="card-img-top" alt="...">
         <div class="card-body text-center customCardStyle">
           <h5 class="card-title"><?= $livre['Title']?></h5>
-          <p class="card-text" style="text-align: justify;"><?= $livre['Description']?></p>
           <a href="../Controllers/description.controller.php" class="btn btn-outline-light btnCustom">En savoir plus</a>
         </div>
     </div>

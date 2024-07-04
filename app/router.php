@@ -1,27 +1,28 @@
 <?php
 
+$uri = parse_url($_SERVER['REQUEST_URI'])['path'];
 
-// ROUTING
-$uri=parse_url($_SERVER['REQUEST_URI'])['path'];
-
-// parse : separer le path de la query - on recupere le path (au cas on a un path avec query /livres?query=...)-> objectif retourner la meme page livres cdr path et pas la query
-
-
-
-// ROUTES PRINCIPALES 
 $routes=[
     '/'=>'accueil.php',
-    '/livres'=>'livres.php',
+    '/livres'=>'Livres.php',
     '/login'=>'login.php',
     '/signup'=>'signup.php',
 ];
 
-// si uri path existe dans routes principales-> require cette page 
-if(array_key_exists($uri,$routes)){
+function routeToController($uri, $routes)
+{
+  if (array_key_exists($uri, $routes)) {
     require $routes[$uri];
+  } else {
+    abort();
+  }
 }
-// si la page n'exsite pas : exemple:http://localhost:8889/livressdfg 
-else{
-   require'404.php';
-    die();// arrêter l'execution
+
+function abort($code = 404)
+{
+  http_response_code($code);
+  require __DIR__ . "/../app/{$code}.php";
+  die();
 }
+
+routeToController($uri, $routes);

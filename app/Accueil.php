@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $titre?></title>
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/styles.css">
 
     <style>
         body {
@@ -44,7 +46,27 @@
 
 <body>
 
-<?php
+<?php 
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+
+    require_once __DIR__ . "/configs/db.config.php";
+
+    $dsn = "mysql:host=".DBHOST.";port=".DBPORT.";dbname=".DBNAME;
+    $user = DBUSER;
+    $pass = DBPASS;
+
+    try {
+        $db = new PDO(
+            $dsn,
+            $user,
+            $pass,
+            array(
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
+            )
+        );
 
 require "../app/components/navbar.php";
 
@@ -55,7 +77,9 @@ $top10books = $db->query($query_1)->fetchAll();
 $query_2 = "SELECT * FROM book ORDER BY books_sold DESC LIMIT 4";
 $likedbooks = $db->query($query_2)->fetchAll();
 
-
+} catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
+}
 ?>
 
 
@@ -142,10 +166,10 @@ $likedbooks = $db->query($query_2)->fetchAll();
     </div>
 </div>
 
+<?php
+require __DIR__ . "/components/footer.php";?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
 
-<?php
-require "../app/components/footer.php";?>

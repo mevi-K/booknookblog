@@ -17,7 +17,7 @@
 <body>
 <nav class="navbar navbar-expand-lg p-0">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/"><img src="./components/logobooknook.png" height="100"></a>
+        <a class="navbar-brand" href="/"><img src="/assets/images/logo.png"></a>
         <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
