@@ -79,7 +79,7 @@ $likedbooks = $db->query($query_2)->fetchAll();
 										
 										<div class="card-body">
 											<h4 class="card-title"><?= $book['Title']?></h4>
-											<button type="button" class="btn btn-dark">En savoir plus</button>
+                                            <a href="description.php?id=<?=$book['Id_Book']?>" class="btn btn-dark">En savoir plus</a>
 										</div>
 									</div>
 								</div>
@@ -101,7 +101,7 @@ $likedbooks = $db->query($query_2)->fetchAll();
 										
 										<div class="card-body">
 											<h4 class="card-title"><?= $book['Title']?></h4>
-											<button type="button" class="btn btn-dark">En savoir plus</button>
+                                            <a href="description.php?id=<?=$book['Id_Book']?>" class="btn btn-dark">En savoir plus</a>
 										</div>
 									</div>
 								</div>
@@ -134,7 +134,7 @@ $likedbooks = $db->query($query_2)->fetchAll();
                     <img src="https://picsum.photos/150/180?random=<?= $random_pics ?>&grayscale" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h4 class="card-title"><?= $book['Title'] ?></h4>
-                        <button type="button" class="btn btn-dark">En savoir plus</button>
+                        <a href="description.php?id=<?=$book['Id_Book']?>" class="btn btn-dark">En savoir plus</a>
                     </div>
                 </div>
             </div>
