@@ -61,6 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Create hashed password
         $password = password_hash($_POST["password"], PASSWORD_ARGON2ID);
 
+
         try {
             $sql = "INSERT INTO utilisateur (user_name, email_id, password, Id_role) VALUES (:name, :email, :password, 2)";
 
