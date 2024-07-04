@@ -5,16 +5,16 @@
           <h5 class="mb-3 footerTitleCustom">Visiter le site</h5>
           <ul class="list-unstyled mb-0">
             <li class="mb-1">
-              <a href="/Controllers/accueil.controller.php">Accueil</a>
+              <a href="/app/Accueil.php">Accueil</a>
             </li>
             <li class="mb-1">
-            <a  href="/Controllers/livres.controller.php">Livres</a>
+            <a  href="/app/Livres.php">Livres</a>
             </li>
             <li class="mb-1">
-            <a  href="/Controllers/login.controller.php">Connexion</a>
+            <a  href="/app/login.php">Connexion</a>
             </li>
             <li>
-            <a  href="/Controllers/signup.controller.php">Inscription</a>
+            <a  href="/app/signup.php">Inscription</a>
             </li>
           </ul>
         </div>
@@ -48,7 +48,7 @@
 
           <div class="col-lg-3 col-md-6 mb-4">
           <h5 class="mb-3 footerTitleCustom">Notre équipe</h5>
-            <img class ="customPhoto" src ="../src/assets/img/_0b8a6d6a-4c1d-4664-92fc-a7f7cf625982.jpg">
+            <img class ="customPhoto" src ="../assets/images/_0b8a6d6a-4c1d-4664-92fc-a7f7cf625982.jpg">
           </div>
         
     <div class="text-center p-3 text-light">

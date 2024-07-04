@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Livres</title>
-
+    <link rel="stylesheet" href="/CSS/styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     
-    <link rel="stylesheet" href="../CSS/styles.css">
+    
 </head>
 <?php 
     ini_set('display_errors', 1);
@@ -46,11 +46,69 @@
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
+
+//*Pagination
+$result_per_page = 8;
+
+//*Determiner la page actuelle
+$page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
+
+//*Determiner l'offset pour la requête SQL
+$offset = ($page -1) * $result_per_page;
+
+//*Gestion du tri
+$sort = isset($_GET['sort']) ? $_GET['sort'] :'';
+switch ($sort){
+    case 'auteur' : 
+        $orderby = 'name';
+        break;
+    case 'genre' : 
+        $orderby = 'nom_genre';
+        break;
+    case 'date' : 
+        $orderby = 'date_pub';
+        break;
+    case 'titre' : 
+        $orderby = 'Title';
+        break;
+    default :
+        $orderby = 'Title';
+}  
+
+//* Récupération des livres depuis la base de données
+try {
+    //Récupérer le nombre total de livres
+       $total_results = $ma_BDD->query('SELECT COUNT(*) FROM `book`')->fetchColumn();
+       $total_pages = ceil($total_results / $result_per_page);
+
+    // Requête SQL pour récupérer tous les livres avec LIMIT et OFFSET  
+    $sqlLivres = "SELECT * FROM `book` as B join genre as G on B.Id_Genre = G.Id_Genre join book_author as BA on B.Id_Book = BA.Id_Book join author as A on BA.Id_Author = A.Id_Author ORDER BY $orderby LIMIT " . $result_per_page . " OFFSET " . $offset; 
+
+    // Exécution de la requête SQL
+    $requeteLivres = $ma_BDD->query($sqlLivres);
+
+    // Récupération des résultats
+    $livres = $requeteLivres->fetchAll();
+
+//* Inclusion de la vue correspondante (livres.view.php par exemple)
+    require_once __DIR__ . "/../views/livres.view.php";
+
+// Inclusion de la vue correspondante (livres.view.php par exemple)
+require_once __DIR__ . "/../views/livres.view.php";
+
+} catch (PDOException $e) {
+    die("Erreur lors de la récupération des livres : " . $e->getMessage());
+}
 ?>
+
+
 <body>
 
 <!--Navbarre-->
-<?php require __DIR__ . "/navbar.php"; ?>
+<?php require __DIR__ . "/components/navbar.php"; ?>
+
+<!--Header-->
+<?php require __DIR__ . "/components/header.php"; ?>
 
 <!--Contenu de la page-->
 <main class="row customBgBody">
@@ -86,7 +144,7 @@
 </main>
 
   <!--Footer-->
-  <?php require __DIR__ . "/footer.php"; ?>
+  <?php require __DIR__ . "/components/footer.php"; ?>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
